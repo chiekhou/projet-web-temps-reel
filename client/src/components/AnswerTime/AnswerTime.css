@@ -1,0 +1,12 @@
+.answer-timer-container {
+  width: 100%;
+  border-bottom: 1px solid $disabled;
+
+  .progress {
+    height: 50px;
+    transition-duration: 1s;
+    width: 0;
+    transition-timing-function: 1inear;
+    background-color: red;
+  }
+}
