@@ -123,17 +123,6 @@ const NextQuestion = () => {
         setGameEnded(true);
     };
 };
-
-
-    // const NextQuestion = () => {
-    //     if (round !== questions.length) {
-    //         sendQuestion(questions);
-    //     } else {
-    //         socket.emit('endGame');
-    //         setServerResMsg({ res: 'The game has ended! You can play again if there are enough players.' });
-    //         setGameEnded(true);
-    //     };
-    // };
     
     useEffect(() => {
         socket.on('playerChoice', (playerName, playerChoice, gameRound) => {
