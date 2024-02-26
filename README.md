@@ -12,7 +12,7 @@ Qui va nous permettre de lancer le server sur le port 5000 et le front sur le po
 
 1. Ouvrir 3 pages sur l'url : http://localhost:3000/ :
    La 1ére page servira à l'administrateur celui qui gérera la partie de quiz.
-   Les deux pages serviront au deux joueurs qui jouerons au quiz et la partie ne peut commencer que si il y a plus de deux joueurs .
+   Les deux pages serviront aux deux joueurs qui jouerons au quiz et la partie ne peut commencer que si il y a plus de deux joueurs .
 
 2. Les joueurs pourronts rejoindre une room grâce un identifiant qui sera celui créer par l'admin qui gére la partie
 
