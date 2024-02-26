@@ -1,11 +1,18 @@
 const express = require('express');
 const socketio = require('socket.io');
+const cookie = require('cookie-parser')
+const dotenv = require("dotenv");
+dotenv.config();
 const http = require('http');
 const PORT = 5000;
 const cors = require('cors');
 const path = require('path');
 
 const app = express();
+app.use(cookie())
+app.use(express.json())
+const routes = require('./routes')
+
 const server = http.createServer(app);
 const io = socketio(server, {
     pingInterval: 10000, // check how often
@@ -13,11 +20,19 @@ const io = socketio(server, {
     cookie: false
 });
 
-// MIDDLEWARE
-// app.use(cors());
-app.use(express.json());
-const scores = require('./routes/scores');
-app.use('/scores', scores);
+const db = require('./db/models/index');
+
+app.use(routes)
+app.use('*', (req,res) => {
+  res.status(404).end()
+})
+
+db.sequelize.sync().then(() => {
+    console.log('synced db.');
+  }).catch((err) => {
+    console.log('Failed to sync db: ' + err.message);
+  })
+  
 
 const whitelist = ['http://localhost:3000', 'http://localhost:5000']
 const corsOptions = {
@@ -43,15 +58,6 @@ if (process.env.NODE_ENV === 'production') {
     });
 }
 
-// const mongoose = require('mongoose');
-// mongoose.connect('mongodb://localhost:27017/trivia', {
-//     useNewUrlParser: true, 
-//     useUnifiedTopology: true
-// })
-// .catch((err) => {
-//     console.log(err);
-// });
-
 // SOCKET
 const uuidv1 = require('uuid/v1');
 rooms = [];
@@ -69,14 +75,14 @@ const startTimer = () => {
             io.emit('timerEnd');
             // Redémarrer le minuteur après un délai
             setTimeout(() => {
-                countdown = 20; // Réinitialiser le compte à rebours
-                startTimer(); // Redémarrer le minuteur
-            }, 1000); // Attendre 3 secondes avant de redémarrer le minuteur
+                countdown = 20; 
+                startTimer(); 
+            }, 1000);
         } else {
             console.log('Timer tick:', countdown); 
-            io.emit('timerTick', countdown); // Envoyer un événement à chaque seconde restante
+            io.emit('timerTick', countdown); 
         }
-    }, 1000); // Exécuter toutes les secondes
+    }, 1000); 
 };
 
 // Fonction pour arrêter le minuteur
@@ -91,9 +97,9 @@ const stopTimer = () => {
 const resetTimer = () => {
     setTimeout(() => {
         stopTimer();
-        countdown = 20; // Réinitialiser le compte à rebours
-        startTimer(); // Redémarrer le minuteur
-    }, 1000)// Redémarrer le minuteur
+        countdown = 20; 
+        startTimer();
+    }, 1000)
 };
 
 

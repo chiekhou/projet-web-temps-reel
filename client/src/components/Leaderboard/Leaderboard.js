@@ -5,7 +5,7 @@ const Leaderboard = () => {
     const [leaderboard, setLeaderboard] = useState([]);
 
     useEffect(() => {
-        fetch('http://localhost:5000/scores/' , {
+        fetch('http://server:5000/api/scores/' , {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',

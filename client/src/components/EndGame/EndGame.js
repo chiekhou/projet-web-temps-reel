@@ -6,25 +6,31 @@ import './EndGame.css';
 const EndGame = ({ players, player }) => {
     let history = useHistory();
 
-    const handleSubmit = e => {
+    const handleSubmit = async e => {
         e.preventDefault();
-
-        fetch('http://localhost:5000/scores/save', {
-            method: 'POST',
-            body: JSON.stringify({
-                username: player.username, 
-                score: player.score
-            }),
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'applicaton/json'
-            }
-        }).then((response) => {
-            if(response.status === 200) {
+    
+        try {
+            const response = await fetch('http://server:5000/api/scores/save', {
+                method: 'POST',
+                body: JSON.stringify({
+                    username: player.username, 
+                    score: player.score
+                }),
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                }
+            });
+    
+            if (response.status === 200) {
                 console.log('Score has been saved');
                 history.push('/leaderboard');
-            };
-        });
+            } else {
+                console.error('Failed to save score:', response.statusText);
+            }
+        } catch (error) {
+            console.error('Error while saving score:', error);
+        }
     };
 
     return(

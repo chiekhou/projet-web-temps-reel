@@ -10,17 +10,10 @@ const GameQuestion = ({ currentQuestion, currentOptions, currentRound, playerNam
     const [clickActivated, setClickActivated] = useState(clickStatus); // true by default
   
     const sendMessage = () => {
-        // Envoyer le message saisi au serveur
+        
         socket.emit("send_message", { text: inputMessage });
-        // Effacer le champ de saisie après l'envoi du message
         setInputMessage("");
       };
-
-    //   useEffect(() => {
-    //     socket.on("receive_message", (data) => {
-    //       setMessageReceived(data.messagesChat);
-    //     });
-    //   }, [socket]);
 
     useEffect(() => {
         // Écouter les événements de réception de messages
@@ -29,7 +22,6 @@ const GameQuestion = ({ currentQuestion, currentOptions, currentRound, playerNam
             setMessagesChat((prevMessages) => [...prevMessages, message]);
         });
     
-        // Nettoyer les écouteurs d'événements lors du démontage du composant
         return () => {
             socket.off("receive_message");
         };

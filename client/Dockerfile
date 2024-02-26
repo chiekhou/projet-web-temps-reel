@@ -4,6 +4,8 @@ WORKDIR /usr/src/app/client
 
 COPY package*.json ./
 
-RUN npm install
+RUN rm -rf node_modules && npm install
+
+
 
 CMD ["npm", "run" ,"start"]

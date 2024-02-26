@@ -3,10 +3,8 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import JoinGame from './components/JoinGame/JoinGame';
 import GamePlayer from './components/GamePlayer/GamePlayer';
 import Leaderboard from './components/Leaderboard/Leaderboard';
-import Navigation from './components/Navigation/Navigation';
 import CreateQuiz from './pages/CreateQuiz';
 import ListeQuiz from './pages/ListeQuiz';
-
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import Home from './pages/Test';
@@ -20,7 +18,6 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-      <Navigation />
       <main>
         <Switch>
           <Route path="/" exact component={JoinGame} />
